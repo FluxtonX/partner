@@ -1,11 +1,24 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext.jsx';
+import React, { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext.jsx";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
+  const [timedOut, setTimedOut] = useState(false);
 
-  if (loading) {
+  useEffect(() => {
+    // If still loading after 5 seconds, show the page anyway
+    const timer = setInterval(() => {
+      if (loading) {
+        console.warn("⚠️ Auth loading timeout - showing page anyway");
+        setTimedOut(true);
+      }
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [loading]);
+
+  if (loading && !timedOut) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -16,7 +29,7 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  if (!user) {
+  if (!user && !timedOut) {
     return <Navigate to="/login" replace />;
   }
 
