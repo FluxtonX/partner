@@ -1,25 +1,28 @@
-import React, { useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../utils/supabase";
 
 const AuthCallbackPage = () => {
-  const { user, businesses, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) return;
+    const handleAuth = async () => {
+      const { error } = await supabase.auth.exchangeCodeForSession(
+        window.location.href
+      );
 
-    if (!user) {
-      navigate('/login', { replace: true });
-      return;
-    }
+      if (error) {
+        console.error("Auth callback error:", error.message);
+        navigate("/login", { replace: true });
+        return;
+      }
 
-    if (businesses.length > 0) {
-      navigate('/dashboard', { replace: true });
-    } else {
-      navigate('/onboarding', { replace: true });
-    }
-  }, [loading, user, businesses, navigate]);
+      // Let AuthContext pick up the new session
+      navigate("/dashboard", { replace: true });
+    };
+
+    handleAuth();
+  }, [navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">
