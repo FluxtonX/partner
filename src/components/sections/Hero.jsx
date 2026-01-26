@@ -1,195 +1,163 @@
 import React from 'react';
-import { Button } from '../ui/button';
+import { ArrowRight, Play, Sparkles, CheckCircle2, TrendingUp } from 'lucide-react';
+
+const Button = ({ children, variant = 'primary', size = 'lg', icon, className = '', ...props }) => {
+  const baseStyles = "font-bold transition-all duration-300 inline-flex items-center justify-center gap-2";
+  const sizes = {
+    lg: "px-8 py-4 text-lg rounded-2xl",
+  };
+  const variants = {
+    primary: "bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-600 hover:to-secondary-600 shadow-2xl hover:shadow-primary hover:scale-105",
+    secondary: "bg-white text-primary-600 border-2 border-primary-200 hover:border-primary-400 hover:bg-primary-50 shadow-xl hover:shadow-2xl hover:scale-105",
+  };
+
+  return (
+    <button className={`${baseStyles} ${sizes[size]} ${variants[variant]} ${className}`} {...props}>
+      {children}
+      {icon && <span className="transition-transform group-hover:translate-x-1">{icon}</span>}
+    </button>
+  );
+};
 
 const Hero = () => {
   return (
-    <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden bg-gradient-to-br from-primary-50 via-white to-secondary-50">
-      {/* Background Decorations */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary-200 rounded-full opacity-20 blur-3xl animate-pulse-slow"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary-200 rounded-full opacity-20 blur-3xl animate-pulse-slow"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-112 h-112 bg-gradient-radial from-primary-100 to-transparent opacity-30 rounded-full"></div>
+    <section className="relative pt-32 pb-24 lg:pt-44 lg:pb-32 overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
-          <div className="text-center lg:text-left animate-fade-in-up">
+          <div className="text-center lg:text-left space-y-8">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 rounded-full text-primary-700 font-semibold text-sm mb-6">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              AI-Powered Project Management
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-500/10 to-secondary-500/10 border border-primary-200 rounded-full backdrop-blur-sm animate-fade-in-up">
+              <Sparkles className="w-4 h-4 text-primary-600" />
+              <span className="text-sm font-bold text-primary-700">AI-Powered Estimating Platform</span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-display-sm lg:text-display-md text-neutral-900 mb-6 leading-tight">
-              Build Winning Proposals with{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-accent">
-                AI Intelligence
+            <h1 className="text-5xl lg:text-7xl font-black text-neutral-900 leading-tight animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+              Close Deals{' '}
+              <span className="relative inline-block">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-600 animate-gradient">
+                  10x Faster
+                </span>
+                <svg className="absolute -bottom-2 left-0 w-full" height="12" viewBox="0 0 300 12" fill="none">
+                  <path d="M2 10C50 5 100 2 150 2C200 2 250 5 298 10" stroke="url(#gradient)" strokeWidth="3" strokeLinecap="round"/>
+                  <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#00f074" />
+                      <stop offset="100%" stopColor="#00d4ff" />
+                    </linearGradient>
+                  </defs>
+                </svg>
               </span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl text-neutral-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Transform your construction business with intelligent estimates, seamless project management, and automated workflows. Close more deals in less time.
+            <p className="text-xl lg:text-2xl text-neutral-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+              AI-powered estimates in seconds. Professional proposals that win. 
+              <span className="font-bold text-neutral-900"> Built for contractors who want to grow.</span>
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-              <Button 
-                variant="primary" 
-                size="lg"
-                icon={
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                }
-              >
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+              <Button variant="primary" size="lg" icon={<ArrowRight className="w-5 h-5" />}>
                 Start Free Trial
               </Button>
-              <Button 
-                variant="secondary" 
-                size="lg"
-                icon={
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                }
-              >
+              <Button variant="secondary" size="lg" icon={<Play className="w-5 h-5" />}>
                 Watch Demo
               </Button>
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-neutral-600">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span>No credit card required</span>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+              <div className="flex items-center gap-2 text-neutral-700">
+                <CheckCircle2 className="w-5 h-5 text-primary-500" />
+                <span className="font-semibold">7-day free trial</span>
               </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span>7-day free trial</span>
+              <div className="flex items-center gap-2 text-neutral-700">
+                <CheckCircle2 className="w-5 h-5 text-primary-500" />
+                <span className="font-semibold">No credit card</span>
               </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span>Cancel anytime</span>
+              <div className="flex items-center gap-2 text-neutral-700">
+                <CheckCircle2 className="w-5 h-5 text-primary-500" />
+                <span className="font-semibold">Cancel anytime</span>
               </div>
             </div>
           </div>
 
-          {/* Right Content - Mockup */}
-          <div className="relative animate-fade-in-up lg:animate-slide-in-left">
+          {/* Right Content - Dashboard Mockup */}
+          <div className="relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <div className="relative">
-              {/* Main Dashboard Card */}
-              <div className="bg-white rounded-3xl shadow-large p-6 lg:p-8 border border-neutral-200 animate-float">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {/* Main Card */}
+              <div className="bg-white/80 backdrop-blur-xl rounded-[2rem] p-8 shadow-2xl border border-white/50 transform hover:scale-105 transition-all duration-500">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6 pb-6 border-b border-neutral-200">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center shadow-lg">
+                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-neutral-900">Kitchen Remodel</h3>
+                      <h3 className="font-bold text-neutral-900 text-lg">Kitchen Remodel</h3>
                       <p className="text-sm text-neutral-600">Project #2024-158</p>
                     </div>
                   </div>
-                  <span className="px-3 py-1 bg-primary-100 text-primary-700 rounded-lg text-sm font-semibold">
-                    In Progress
-                  </span>
+                  <div className="px-4 py-2 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-xl">
+                    <span className="text-xs font-bold text-primary-700">Active</span>
+                  </div>
                 </div>
 
-                {/* Stats */}
+                {/* Stats Grid */}
                 <div className="grid grid-cols-3 gap-4 mb-6">
-                  <div className="text-center p-3 bg-neutral-50 rounded-xl">
-                    <div className="text-2xl font-bold text-neutral-900">$45K</div>
-                    <div className="text-xs text-neutral-600 mt-1">Budget</div>
+                  <div className="bg-gradient-to-br from-primary-50 to-white p-4 rounded-2xl border border-primary-100">
+                    <div className="text-2xl font-black text-neutral-900">$45K</div>
+                    <div className="text-xs text-neutral-600 font-semibold mt-1">Budget</div>
                   </div>
-                  <div className="text-center p-3 bg-neutral-50 rounded-xl">
-                    <div className="text-2xl font-bold text-neutral-900">68%</div>
-                    <div className="text-xs text-neutral-600 mt-1">Complete</div>
+                  <div className="bg-gradient-to-br from-secondary-50 to-white p-4 rounded-2xl border border-secondary-100">
+                    <div className="text-2xl font-black text-neutral-900">68%</div>
+                    <div className="text-xs text-neutral-600 font-semibold mt-1">Complete</div>
                   </div>
-                  <div className="text-center p-3 bg-neutral-50 rounded-xl">
-                    <div className="text-2xl font-bold text-neutral-900">12d</div>
-                    <div className="text-xs text-neutral-600 mt-1">Remaining</div>
+                  <div className="bg-gradient-to-br from-accent-orange/10 to-white p-4 rounded-2xl border border-accent-orange/20">
+                    <div className="text-2xl font-black text-neutral-900">12d</div>
+                    <div className="text-xs text-neutral-600 font-semibold mt-1">Left</div>
                   </div>
                 </div>
 
                 {/* Progress Bar */}
-                <div className="mb-4">
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-neutral-700 font-medium">Project Progress</span>
-                    <span className="text-primary-600 font-semibold">68%</span>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-bold text-neutral-700">Progress</span>
+                    <span className="text-sm font-black text-primary-600">68%</span>
                   </div>
-                  <div className="h-3 bg-neutral-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-primary rounded-full" style={{ width: '68%' }}></div>
+                  <div className="h-4 bg-neutral-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full shadow-lg" style={{ width: '68%' }}></div>
                   </div>
-                </div>
-
-                {/* Task List */}
-                <div className="space-y-2">
-                  {[
-                    { task: 'Demolition', status: 'complete' },
-                    { task: 'Electrical Work', status: 'complete' },
-                    { task: 'Cabinet Installation', status: 'progress' },
-                    { task: 'Countertop Install', status: 'pending' },
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-3 p-2 hover:bg-neutral-50 rounded-lg transition-colors">
-                      <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
-                        item.status === 'complete' ? 'bg-primary-500' :
-                        item.status === 'progress' ? 'bg-accent-orange' :
-                        'bg-neutral-300'
-                      }`}>
-                        {item.status === 'complete' && (
-                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        )}
-                      </div>
-                      <span className={`text-sm ${
-                        item.status === 'complete' ? 'text-neutral-500 line-through' : 'text-neutral-900'
-                      }`}>
-                        {item.task}
-                      </span>
-                    </div>
-                  ))}
                 </div>
               </div>
 
               {/* Floating AI Badge */}
-              <div className="absolute -top-4 -right-4 bg-gradient-accent text-white px-4 py-2 rounded-full shadow-large flex items-center gap-2 animate-float" style={{ animationDelay: '0.5s' }}>
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z" />
-                </svg>
-                <span className="font-semibold text-sm">AI Powered</span>
+              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-accent-orange to-accent-yellow text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-2 animate-float">
+                <Sparkles className="w-5 h-5" />
+                <span className="font-black text-sm">AI Powered</span>
               </div>
 
-              {/* Floating Estimate Badge */}
-              <div className="absolute -bottom-4 -left-4 bg-white px-4 py-3 rounded-2xl shadow-large flex items-center gap-3 animate-float" style={{ animationDelay: '1s' }}>
-                <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center">
-                  <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="text-sm text-neutral-600">Estimate Created</div>
-                  <div className="text-lg font-bold text-neutral-900">$45,200</div>
-                </div>
-                <div className="ml-2">
-                  <div className="flex items-center gap-1 text-primary-600">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-xs font-semibold">+12%</span>
+              {/* Floating Stats Badge */}
+              <div className="absolute -bottom-4 -left-4 bg-white px-6 py-4 rounded-2xl shadow-2xl border border-primary-100 animate-float" style={{ animationDelay: '0.5s' }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-neutral-600 font-semibold">Revenue Up</div>
+                    <div className="text-xl font-black text-neutral-900">+127%</div>
                   </div>
                 </div>
               </div>
@@ -197,57 +165,41 @@ const Hero = () => {
           </div>
         </div>
 
-       <div className="mt-20 lg:mt-28 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-          <div className="bg-gradient-to-br from-primary-50 via-white to-secondary-50 rounded-3xl p-8 lg:p-12 shadow-large border border-primary-100">
-            <div className="grid lg:grid-cols-5 gap-8 items-center">
-              {/* Left Content */}
-              <div className="lg:col-span-1">
-                <h2 className="text-heading-lg text-neutral-900 font-bold leading-tight">
-                  See immediate{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-accent">
-                    results
-                  </span>
-                </h2>
+        {/* Bottom Stats Banner */}
+        <div className="mt-20 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+          <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-3xl p-8 lg:p-12 shadow-2xl border border-neutral-700">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-accent-yellow mb-2">+$5.2K</div>
+                <div className="text-neutral-400 font-semibold">Weekly Earnings</div>
               </div>
-
-              {/* Stats Grid */}
-              <div className="lg:col-span-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {/* Stat 1 */}
-                <div className="bg-white rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 border border-neutral-100">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="text-3xl lg:text-4xl font-bold text-accent-orange">+$5,250</div>
-                  </div>
-                  <p className="text-sm text-neutral-600 font-medium">More earned weekly</p>
-                </div>
-
-                {/* Stat 2 */}
-                <div className="bg-white rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 border border-neutral-100">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="text-3xl lg:text-4xl font-bold text-accent-yellow">+14 hrs</div>
-                  </div>
-                  <p className="text-sm text-neutral-600 font-medium">Saved weekly</p>
-                </div>
-
-                {/* Stat 3 */}
-                <div className="bg-white rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 border border-neutral-100">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="text-3xl lg:text-4xl font-bold text-accent-purple">+40%</div>
-                  </div>
-                  <p className="text-sm text-neutral-600 font-medium">More deals closed</p>
-                </div>
-
-                {/* Stat 4 */}
-                <div className="bg-white rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 border border-neutral-100">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="text-3xl lg:text-4xl font-bold text-primary-500">+$85k</div>
-                  </div>
-                  <p className="text-sm text-neutral-600 font-medium">In annual profit</p>
-                </div>
+              <div className="text-center">
+                <div className="text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400 mb-2">+14hrs</div>
+                <div className="text-neutral-400 font-semibold">Time Saved</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-accent-purple to-accent-blue mb-2">+40%</div>
+                <div className="text-neutral-400 font-semibold">More Deals</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-600 mb-2">$85K+</div>
+                <div className="text-neutral-400 font-semibold">Annual Profit</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes gradient {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient 3s ease infinite;
+        }
+      `}</style>
     </section>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Menu, X, ChevronDown } from 'lucide-react';
 
-// Add this function right after your imports, before the Button component
 const navigate = (path) => {
   window.history.pushState({}, "", path);
   window.dispatchEvent(new PopStateEvent("popstate"));
@@ -9,17 +9,19 @@ const navigate = (path) => {
 const Button = ({
   children,
   variant = "primary",
-  size = "sm",
+  size = "md",
   className = "",
   ...props
 }) => {
-  const baseStyles = "rounded-lg font-medium transition-colors";
+  const baseStyles = "font-semibold transition-all duration-300 inline-flex items-center justify-center";
   const sizes = {
-    sm: "px-4 py-2 text-sm",
+    sm: "px-5 py-2.5 text-sm rounded-full",
+    md: "px-6 py-3 text-base rounded-full",
   };
   const variants = {
-    primary: "bg-primary-600 text-white hover:bg-primary-700",
-    ghost: "text-neutral-700 hover:bg-neutral-100",
+    primary: "bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700 shadow-lg hover:shadow-xl hover:scale-105",
+    ghost: "text-neutral-700 hover:text-primary-600 hover:bg-primary-50 rounded-full",
+    outline: "border-2 border-primary-500 text-primary-600 hover:bg-primary-500 hover:text-white rounded-full",
   };
 
   return (
@@ -40,13 +42,12 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -63,18 +64,10 @@ const Header = () => {
       href: "/who-we-serve",
       hasDropdown: true,
       dropdownItems: [
-        {
-          name: "General Contractors",
-          href: "/general-contractors",
-          icon: "👷",
-        },
+        { name: "General Contractors", href: "/general-contractors", icon: "👷" },
         { name: "Remodelers", href: "/remodelers", icon: "🏠" },
         { name: "Home Builders", href: "/home-builders", icon: "🏗️" },
-        {
-          name: "Specialty Contractors",
-          href: "/specialty-contractors",
-          icon: "⚡",
-        },
+        { name: "Specialty Contractors", href: "/specialty-contractors", icon: "⚡" },
       ],
     },
     {
@@ -82,66 +75,12 @@ const Header = () => {
       href: "/features",
       hasDropdown: true,
       dropdownItems: [
-        {
-          name: "Instant AI Estimates",
-          href: "/features/ai-estimates",
-          description: "Generate detailed estimates in seconds",
-        },
-        {
-          name: "Invoicing",
-          href: "/features/invoicing",
-          description: "Turn proposals into invoices quickly",
-        },
-        {
-          name: "Project Management",
-          href: "/features/project-management",
-          description: "Keep all project data in one place",
-        },
-        {
-          name: "Client Management System",
-          href: "/features/client-management",
-          description: "Store client info and estimates",
-        },
-        {
-          name: "Change Orders",
-          href: "/features/change-orders",
-          description: "Manage scope changes with AI",
-        },
-        {
-          name: "AI Agent",
-          href: "/features/ai-agent",
-          description: "Personal AI assistant for your business",
-        },
-        {
-          name: "Winning AI Proposals",
-          href: "/features/proposals",
-          description: "Generate winning proposals automatically",
-        },
-        {
-          name: "File Management",
-          href: "/features/file-management",
-          description: "Organize drawings and photos",
-        },
-        {
-          name: "Homeowner Financing",
-          href: "/features/financing",
-          description: "Offer financing on every proposal",
-        },
-        {
-          name: "Creating Estimates from files",
-          href: "/features/estimate-from-files",
-          description: "From drawings, photos and more",
-        },
-        {
-          name: "AI Documents",
-          href: "/features/ai-documents",
-          description: "Upload files for instant AI estimates",
-        },
-        {
-          name: "AI Transcription",
-          href: "/features/transcription",
-          description: "Record and transcribe meetings",
-        },
+        { name: "AI Estimates", href: "/features/ai-estimates", description: "Generate detailed estimates in seconds" },
+        { name: "Invoicing", href: "/features/invoicing", description: "Turn proposals into invoices quickly" },
+        { name: "Project Management", href: "/features/project-management", description: "Keep all project data organized" },
+        { name: "Client Portal", href: "/features/client-management", description: "Store client info and estimates" },
+        { name: "Change Orders", href: "/features/change-orders", description: "Manage scope changes with AI" },
+        { name: "AI Agent", href: "/features/ai-agent", description: "Your personal AI assistant" },
       ],
     },
     { name: "Pricing", href: "/pricing" },
@@ -155,11 +94,8 @@ const Header = () => {
         { name: "Case Studies", href: "/case-studies", icon: "📊" },
         { name: "Video Tutorials", href: "/tutorials", icon: "🎥" },
         { name: "Help Center", href: "/help", icon: "❓" },
-        { name: "Community", href: "/community", icon: "👥" },
       ],
     },
-    { name: "Help Center", href: "/help" },
-    { name: "We're Hiring", href: "/careers" },
   ];
 
   const handleDropdownToggle = (itemName) => {
@@ -169,97 +105,81 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-2 left-0 right-0 z-50 transition-all rounded-[20px] lg:rounded-[50px] duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-medium py-3"
-            : "bg-transparent py-5"
+            ? "bg-white/95 backdrop-blur-xl shadow-2xl py-4"
+            : "bg-transparent py-6"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center">
-                <img
-                  src="/logo.png"
-                  alt="Partner Logo"
-                  className="w-10 h-10 object-contain"
-                />
+            {/* Logo - Enhanced */}
+            <div className="flex items-center gap-3 group cursor-pointer">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity"></div>
+                <div className="relative w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+                  <img
+                    src="/logo.png"
+                    alt="Partner Logo"
+                    className="w-8 h-8 object-contain"
+                  />
+                </div>
               </div>
-              <span className="text-2xl font-bold text-primary-500">
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                 Partner
               </span>
             </div>
 
             {/* Desktop Navigation */}
-            <nav
-              className="hidden lg:flex items-center gap-1"
-              ref={dropdownRef}
-            >
+            <nav className="hidden lg:flex items-center gap-2" ref={dropdownRef}>
               {navigation.map((item) => (
                 <div key={item.name} className="relative">
                   {item.hasDropdown ? (
                     <button
                       onClick={() => handleDropdownToggle(item.name)}
                       onMouseEnter={() => setActiveDropdown(item.name)}
-                      className="flex items-center gap-1 px-4 py-2 text-neutral-700 hover:text-primary-600 font-medium transition-colors rounded-lg hover:bg-neutral-50"
+                      className="flex items-center gap-1.5 px-4 py-2.5 text-neutral-700 hover:text-primary-600 font-medium transition-all rounded-full hover:bg-primary-50 group"
                     >
                       {item.name}
-                      <svg
-                        className={`w-4 h-4 transition-transform ${
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-300 ${
                           activeDropdown === item.name ? "rotate-180" : ""
                         }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
+                      />
                     </button>
                   ) : (
                     <a
                       href={item.href}
-                      className="px-4 py-2 text-neutral-700 hover:text-primary-600 font-medium transition-colors rounded-lg hover:bg-neutral-50 block"
+                      className="px-4 py-2.5 text-neutral-700 hover:text-primary-600 font-medium transition-all rounded-full hover:bg-primary-50 block"
                     >
                       {item.name}
                     </a>
                   )}
 
-                  {/* Dropdown Menu */}
+                  {/* Dropdown Menu - Enhanced */}
                   {item.hasDropdown && activeDropdown === item.name && (
                     <div
-                      className="absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-large border border-neutral-200 py-2 min-w-[320px] animate-fade-in-up"
+                      className="absolute top-full left-0 mt-3 bg-white rounded-3xl shadow-2xl border border-neutral-100 py-3 min-w-[280px] animate-fade-in-up"
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
-                      <div
-                        className={
-                          item.name === "Features"
-                            ? "grid grid-cols-3 gap-1 p-2"
-                            : "p-2"
-                        }
-                      >
+                      <div className={item.name === "Features" ? "grid grid-cols-2 gap-2 p-3" : "p-3"}>
                         {item.dropdownItems.map((dropdownItem) => (
                           <a
                             key={dropdownItem.name}
                             href={dropdownItem.href}
-                            className="flex items-start gap-3 px-4 py-3 rounded-xl hover:bg-primary-50 transition-colors group"
+                            className="flex items-start gap-3 px-4 py-3 rounded-2xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-secondary-50 transition-all group/item"
                           >
                             {dropdownItem.icon && (
-                              <span className="text-2xl">
+                              <span className="text-2xl transform group-hover/item:scale-110 transition-transform">
                                 {dropdownItem.icon}
                               </span>
                             )}
                             <div className="flex-1">
-                              <div className="font-bold text-neutral-900 group-hover:text-primary-600 transition-colors">
+                              <div className="font-semibold text-neutral-900 group-hover/item:text-primary-600 transition-colors">
                                 {dropdownItem.name}
                               </div>
                               {dropdownItem.description && (
-                                <div className="text-sm font-normal text-neutral-600 mt-0.5">
+                                <div className="text-xs text-neutral-600 mt-0.5">
                                   {dropdownItem.description}
                                 </div>
                               )}
@@ -273,127 +193,100 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* CTA Buttons */}
-            <div className="hidden lg:flex items-center gap-4">
-              <Button variant="ghost" size="sm"
-              onClick={() => navigate("/login")}>
+            {/* CTA Buttons - Enhanced */}
+            <div className="hidden lg:flex items-center gap-3">
+              <Button variant="ghost" size="sm" onClick={() => navigate("/login")}>
                 Login
               </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => navigate("/signup")
-
-                }
-              >
-                Start an estimate
+              <Button variant="primary" size="sm" onClick={() => navigate("/signup")}>
+                <span>Start Free Trial</span>
+                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
               </Button>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - Enhanced */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-neutral-700 hover:text-primary-600"
+              className="lg:hidden p-3 text-neutral-700 hover:text-primary-600 hover:bg-primary-50 rounded-full transition-all"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isMobileMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Menu - Now outside header */}
+      {/* Mobile Menu - Completely Redesigned */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed top-20 left-0 right-0 z-40 bg-white/95 backdrop-blur-md rounded-[30px] mx-4 shadow-medium animate-fade-in-up max-h-[80vh] overflow-y-auto">
-          <nav className="flex flex-col gap-2 p-4">
-            {navigation.map((item) => (
-              <div key={item.name}>
-                {item.hasDropdown ? (
-                  <div>
-                    <button
-                      onClick={() => handleDropdownToggle(item.name)}
-                      className="flex items-center justify-between w-full px-4 py-3 text-neutral-700 hover:text-primary-600 font-medium transition-colors rounded-lg hover:bg-neutral-50"
+        <div className="lg:hidden fixed top-24 left-0 right-0 bottom-0 z-40 bg-white/98 backdrop-blur-xl animate-fade-in">
+          <div className="h-full overflow-y-auto px-4 py-6">
+            <nav className="flex flex-col gap-2">
+              {navigation.map((item) => (
+                <div key={item.name} className="border-b border-neutral-100 pb-2">
+                  {item.hasDropdown ? (
+                    <div>
+                      <button
+                        onClick={() => handleDropdownToggle(item.name)}
+                        className="flex items-center justify-between w-full px-5 py-4 text-neutral-700 hover:text-primary-600 font-semibold transition-all rounded-2xl hover:bg-primary-50"
+                      >
+                        {item.name}
+                        <ChevronDown
+                          className={`w-5 h-5 transition-transform ${
+                            activeDropdown === item.name ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+                      {activeDropdown === item.name && (
+                        <div className="ml-4 mt-2 space-y-1 animate-fade-in-up">
+                          {item.dropdownItems.map((dropdownItem) => (
+                            <a
+                              key={dropdownItem.name}
+                              href={dropdownItem.href}
+                              className="block px-5 py-3 text-sm text-neutral-600 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <div className="flex items-center gap-2">
+                                {dropdownItem.icon && (
+                                  <span className="text-lg">{dropdownItem.icon}</span>
+                                )}
+                                <span className="font-medium">{dropdownItem.name}</span>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className="block px-5 py-4 text-neutral-700 hover:text-primary-600 font-semibold transition-all rounded-2xl hover:bg-primary-50"
+                      onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.name}
-                      <svg
-                        className={`w-4 h-4 transition-transform ${
-                          activeDropdown === item.name ? "rotate-180" : ""
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </button>
-                    {activeDropdown === item.name && (
-                      <div className="ml-4 mt-2 space-y-1">
-                        {item.dropdownItems.map((dropdownItem) => (
-                          <a
-                            key={dropdownItem.name}
-                            href={dropdownItem.href}
-                            className="block px-4 py-2 text-sm text-neutral-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            {dropdownItem.icon && (
-                              <span className="mr-2">{dropdownItem.icon}</span>
-                            )}
-                            {dropdownItem.name}
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <a
-                    href={item.href}
-                    className="block px-4 py-3 text-neutral-700 hover:text-primary-600 font-medium transition-colors rounded-lg hover:bg-neutral-50"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                )}
-              </div>
-            ))}
-            <div className="flex flex-col gap-3 pt-4 mt-4 border-t border-neutral-200">
-              <Button variant="ghost" size="sm" className="w-full">
+                    </a>
+                  )}
+                </div>
+              ))}
+            </nav>
+
+            {/* Mobile CTA Buttons */}
+            <div className="flex flex-col gap-3 pt-6 mt-6 border-t border-neutral-200">
+              <Button variant="ghost" size="md" className="w-full" onClick={() => navigate("/login")}>
                 Login
               </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                className="w-full"
-                onClick={() => navigate("/signup")}
-              >
-                Start an estimate
+              <Button variant="primary" size="md" className="w-full" onClick={() => navigate("/signup")}>
+                Start Free Trial
+                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
               </Button>
             </div>
-          </nav>
+          </div>
         </div>
       )}
     </>
